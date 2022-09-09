@@ -1,0 +1,5 @@
+GET http://localhost:3000/api/notes/
+
+### Get by ID
+
+GET http://localhost:3000/api/notes/631a3c695271958ad9a10212

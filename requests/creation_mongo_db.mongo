@@ -1,0 +1,105 @@
+use mydb
+
+db.createCollection('photos')
+
+db.photos.insert({
+    id: 2,
+    name: 'pepepe',
+    img: 'https://img/...',
+    likes: [{
+        pepe: 1,
+        pepa: 2 
+    }]
+})
+
+'''
+---------------------------------------
+> db.photos.insert({id: 2, name: 'pepepe', img: 'https://img/...', likes: [{ pepe: 1, pepa: 2}]})
+
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("631a06879524bf76a3e8be30") }
+}
+----------------------
+''' 
+
+db.photos.find()
+
+'''
+-----------------------------------------------------
+> db.photos.find()
+
+[
+  {
+    _id: ObjectId("631a06879524bf76a3e8be30"),
+    id: 2,
+    name: 'pepepe',
+    img: 'https://img/...',
+    likes: [ { pepe: 1, pepa: 2 } ]
+  }
+]
+------------------------------------------------------
+'''
+
+db.photos.insert({name: 'pepa', img: 'https://img/...', likes: [{ pepe: 1, pepepe: 2}]})
+
+
+db.photos.find({name: 'pepa'})
+
+'''
+-----------------------------------------------
+> db.photos.find({name: 'pepa'})
+
+[
+  {
+    _id: ObjectId("631a08009524bf76a3e8be31"),
+    name: 'pepa',
+    img: 'https://img/...',
+    likes: [ { pepe: 1, pepepe: 2 } ]
+  },
+  {
+    _id: ObjectId("631a082f9524bf76a3e8be32"),
+    name: 'pepa',
+    img: 'https://img/...',
+    likes: [ { pepe: 1, pepepe: 2 } ]
+  },
+  {
+    _id: ObjectId("631a08349524bf76a3e8be33"),
+    name: 'pepa',
+    img: 'https://img/...',
+    likes: [ { pepe: 1, pepepe: 2 } ]
+  }
+]
+-----------------------------------------------------
+'''
+
+db.photos.update({ name: 'pepepe'}, {img: "imagen pepepe"})
+
+'''
+El update esto actualiza todos los campos y por tanto te quitaria todos los campos
+que añadews por eso hay que tener cuidado con esta manera, para solo actualizar lo
+que nosotros queremos hay que hacerlo de la sigueinte manera
+'''
+
+db.photos.update({ name: 'pepepe'}, {$set: {img: "imagen pepepe"}})
+
+'''
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+mydb> db.photos.find({name: 'pepepe'})
+[
+  {
+    _id: ObjectId("631a06879524bf76a3e8be30"),
+    id: 2,
+    name: 'pepepe',
+    img: 'imagen pepepe',
+    likes: [ { pepe: 1, pepa: 2 } ]
+  }
+]
+'''

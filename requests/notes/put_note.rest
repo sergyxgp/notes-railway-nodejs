@@ -1,0 +1,10 @@
+GET http://localhost:3000/api/notes/
+
+### Put note modified notes
+PUT http://localhost:3000/api/notes/631b16988f520ad08f403e32
+content-type: application/json
+
+{
+    "content": "Modificacion",
+    "important": true
+}
